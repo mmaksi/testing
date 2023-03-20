@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+## What is a story?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The _acceptance criteria_ is a description of a feature that must be implemented to complete the story. In our case, it is described like this: _user must be able to open an app, enter the name of the task, press enter and see his task in the list of tasks._ <br>
 
-## Available Scripts
+User story is used to write the very first integration test. Based on the integration test, we write the unit tests. After the unit tests are written and fail, we begin writing code to fix the unit tests. Once all unit tests are fixed, the integration test should also pass.
 
-In the project directory, you can run:
+## Writing integration tests
 
-### `npm start`
+Writing integration tests is actually pretty simple. You should just read off the acceptance criteria (or any English description of the feature), and translate it into JavaScript. To do this, you will need to know a few Selenium functions: <br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- `driver.get(url)`: Open a webpage.
+- `driver.wait(condition, timeout)`: Wait for something. It’s typically used to wait for elements while the page is loading.
+- `driver.findElement/driver.findElements`: Find elements on a webpage. <br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+And a few helper functions:
 
-### `npm test`
+- `By`: This function is used as an argument to find elements. For example:
+- `By.id("textInput")`
+- `By.className("wrapper")`
+- `By.xpath("//input")`
+- `driver.findElement(By.tag("div"))`
+- `until`: - This function is used as an argument for the wait function. For example:
+- `until.elementLocated(By.id("submitBtn"))`
+- `until.titleContains("abacaba")`
+- `wait(until.elementLocated(By.name("wrapper")), 1000)`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## XPath Cheetsheet
 
-### `npm run build`
+- ### Selecting a tag:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  - `//h1`: Select all H1 elements.
+  - `//article//p`: Select all `p` elements within `article` elements.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- ### Ordering:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - `//ul/li[1]`: Select first LI child of UI elements.
+  - `//a[last()]`: Slect the last A element of the whole document.
 
-### `npm run eject`
+- ### Attributes:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  - `//*[@id='input']`: Select element with id='input'.
+  - `//div[@class='wrapper']`: Select all DIV with class wrapper.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Jest Cheetsheet
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- # Defining tests
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  - Grouping tests: `describe('<Component />', () => {});`
 
-## Learn More
+  - Individual tests: `it('does something', () => {});` or `test('does something', () => {});`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- # Setup and teardown
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - `beforeEach(() => {})`: Runs before each test.
 
-### Code Splitting
+  - `afterEach(() => {})`: Runs after all tests.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  - `beforeAll(() => {})`: Runs once before all tests.
 
-### Analyzing the Bundle Size
+  - `afterAll(() => {})`: Runs once after all tests.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- # Assertions
+`expect(value)` is always the first step to assert something. It contains the following functions:
 
-### Making a Progressive Web App
+- `expect(value).toBe(value)`: Shallow equality check
+- `expect(value).toEqual(value)`: Deep equality check
+- `expect(value).toBeTruthy()` and `expect(value).toBeFalsy()`
+- `expect(value).toBeDefined()`
+- `expect(value).toBeNull()`
+- `expect(value).toBeGreaterThan(value)`, `expect(value).toBeGreaterThanOrEqual(value)`, `expect(value).toBeLessThan(value)`, and `expect(value).toBeLessThanOrEqual(value)`
+- `expect(value).toBeCloseTo(value, numDigits)`
+- `expect(value).toMatch(regex)`: Check a string against a regex.
+- `expect(value).toContain(value)`: Check a data structure for containing a value.
+- `expect(value).toBeInstanceOf(type)`: Instance check
+<br>
+You can also add `.not` to expect to flip the assertion around: `expect(value).not.toEqual('abacaba')` and `expect(value).not.toBeInstanceOf(Abacaba)`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- # Defining tests
+  - Create a mock function: `jest.fn()`.
+  - Check if a mock function was called: `expect(mock).toHaveBeenCalled()` and `expect(mock).toHaveBeenCalledWith(args)`
