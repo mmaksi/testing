@@ -10,7 +10,10 @@ Writing integration tests is actually pretty simple. You should just read off th
 
 - `driver.get(url)`: Open a webpage.
 - `driver.wait(condition, timeout)`: Wait for something. It’s typically used to wait for elements while the page is loading.
-- `driver.findElement/driver.findElements`: Find elements on a webpage. <br>
+- `driver.findElement/driver.findElements`: Find elements on a webpage and returns it.
+- `element.clear()` to clear input from old data.
+- `element.click()` to click on tasks.
+- `element.getAttribute(attr)` to get attribute values (classes in our case). <br>
 
 And a few helper functions:
 
