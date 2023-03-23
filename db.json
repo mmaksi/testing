@@ -4,6 +4,41 @@
       "id": 1,
       "label": "Do this",
       "completed": false
+    },
+    {
+      "label": "asd",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "label": "sad",
+      "completed": false,
+      "id": 3
+    },
+    {
+      "label": "new todo!",
+      "completed": false,
+      "id": 4
+    },
+    {
+      "label": "Persisted Task 1",
+      "completed": false,
+      "id": 5
+    },
+    {
+      "label": "Task 1",
+      "completed": false,
+      "id": 6
+    },
+    {
+      "label": "Task 2",
+      "completed": true,
+      "id": 7
+    },
+    {
+      "label": "Task 3",
+      "completed": false,
+      "id": 8
     }
   ]
 }
